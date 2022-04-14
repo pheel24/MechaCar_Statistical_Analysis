@@ -17,7 +17,7 @@ summary(linear_model)
 
 #D2
 #read data
-Suspension_coil_data<-read.table("Suspension_Coil.csv",check.names = F,stringsAsFactors = F)
+Suspension_coil_data<-read.table("Suspension_Coil.csv",header=TRUE,sep=",",check.names = F,stringsAsFactors = F)
 
 # total summary
 total_summary<-Suspension_coil_data %>% summarize(mean_PSI=mean(PSI),median_PSI=median(PSI),variance_PSI=var(PSI),sd_PSI=sd(PSI))
@@ -25,3 +25,12 @@ total_summary<-Suspension_coil_data %>% summarize(mean_PSI=mean(PSI),median_PSI=
 #lot summary
 lot_summary<-Suspension_coil_data %>% group_by(Manufacturing_Lot) %>% summarize(mean_PSI=mean(PSI),median_PSI=median(PSI),variance_PSI=var(PSI),sd_PSI=sd(PSI), .groups='keep')
 
+
+#D3
+# all lots t-test
+t.test(Suspension_coil_data$PSI,mu=1500)
+
+# t-tests by lot
+t.test(subset(Suspension_coil_data$PSI, Suspension_coil_data$Manufacturing_Lot=="Lot1"),mu=1500)
+t.test(subset(Suspension_coil_data$PSI, Suspension_coil_data$Manufacturing_Lot=="Lot2"),mu=1500)
+t.test(subset(Suspension_coil_data$PSI, Suspension_coil_data$Manufacturing_Lot=="Lot3"),mu=1500)
